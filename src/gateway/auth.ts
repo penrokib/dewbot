@@ -19,14 +19,18 @@ export type ResolvedGatewayAuth = {
 
 export type GatewayAuthResult = {
   ok: boolean;
-  method?: "token" | "password" | "tailscale" | "device-token";
+  method?: "token" | "password" | "tailscale" | "device-token" | "jwt";
   user?: string;
+  orgId?: string;
+  workspaceId?: string;
+  role?: string;
   reason?: string;
 };
 
 type ConnectAuth = {
   token?: string;
   password?: string;
+  jwt?: string;
 };
 
 type TailscaleUser = {
@@ -241,6 +245,23 @@ export async function authorizeGatewayConnect(params: {
         user: tailscaleCheck.user.login,
       };
     }
+  }
+
+  // JWT auth path: validate Dewx JWT tokens for multi-tenant access
+  if (connectAuth?.jwt) {
+    const { validateToken } = await import("../auth/jwt.middleware.js");
+    const result = validateToken(connectAuth.jwt);
+    if (result.valid && result.payload) {
+      return {
+        ok: true,
+        method: "jwt",
+        user: result.payload.email || result.payload.userId,
+        orgId: result.payload.organizationId,
+        workspaceId: result.payload.workspaceId,
+        role: result.payload.role,
+      };
+    }
+    return { ok: false, reason: result.error || "jwt_invalid" };
   }
 
   if (auth.mode === "token") {

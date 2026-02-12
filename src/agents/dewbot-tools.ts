@@ -1,6 +1,10 @@
 import type { DewBotConfig } from "../config/config.js";
 import type { GatewayMessageChannel } from "../utils/message-channel.js";
 import type { AnyAgentTool } from "./tools/common.js";
+import { createCouncilTool } from "../ai/council-tool.js";
+import { createDewxBridgeTool } from "../ai/dewx-tool-adapter.js";
+import { createHealthMonitorTool } from "../ai/health-monitor.js";
+import { createKnowledgeTool } from "../ai/knowledge-tool.js";
 import { resolvePluginTools } from "../plugins/tools.js";
 import { resolveSessionAgentId } from "./agent-scope.js";
 import { createAgentsListTool } from "./tools/agents-list-tool.js";
@@ -146,6 +150,23 @@ export function createDewBotTools(options?: {
     ...(webSearchTool ? [webSearchTool] : []),
     ...(webFetchTool ? [webFetchTool] : []),
     ...(imageTool ? [imageTool] : []),
+    // Dewx Platform Bridge: provides access to 250+ Dewx tool routers
+    // (CRM, Finance, HR, Marketing, etc.) via a single bridge tool.
+    createDewxBridgeTool({
+      orgId: options?.agentAccountId,
+    }),
+    // LLM Council: multi-persona strategic debate for complex decisions
+    createCouncilTool({
+      orgId: options?.agentAccountId,
+    }),
+    // Knowledge Base: semantic search across 710+ expert documents
+    createKnowledgeTool({
+      orgId: options?.agentAccountId,
+    }),
+    // Business Health: monitor org health score across 4 domains
+    createHealthMonitorTool({
+      orgId: options?.agentAccountId,
+    }),
   ];
 
   const pluginTools = resolvePluginTools({

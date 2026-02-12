@@ -9,6 +9,11 @@ type WarnState = { warned: boolean };
 
 let defaultWarnState: WarnState = { warned: false };
 
+// Default LiteLLM proxy URL for unified model access.
+// When set, DewBot routes LLM calls through this proxy instead of calling
+// providers (Anthropic, OpenAI, etc.) directly.
+export const DEFAULT_LITELLM_BASE_URL = process.env.DEWBOT_LITELLM_URL || "http://localhost:4100";
+
 type AnthropicAuthDefaultsMode = "api_key" | "oauth";
 
 const DEFAULT_MODEL_ALIASES: Readonly<Record<string, string>> = {

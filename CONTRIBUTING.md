@@ -1,35 +1,16 @@
 # Contributing to DewBot
 
-Welcome to the lobster tank! 🦞
+Welcome to the DewBot project!
 
 ## Quick Links
 
 - **GitHub:** https://github.com/dewbot/dewbot
 - **Discord:** https://discord.gg/qkhbAGHRBT
-- **X/Twitter:** [@steipete](https://x.com/steipete) / [@dewbot](https://x.com/dewbot)
+- **X/Twitter:** [@dewbot](https://x.com/dewbot)
 
 ## Maintainers
 
-- **Peter Steinberger** - Benevolent Dictator
-  - GitHub: [@steipete](https://github.com/steipete) · X: [@steipete](https://x.com/steipete)
-
-- **Shadow** - Discord + Slack subsystem
-  - GitHub: [@thewilloftheshadow](https://github.com/thewilloftheshadow) · X: [@4shad0wed](https://x.com/4shad0wed)
-
-- **Vignesh** - Memory (QMD), formal modeling, TUI, and Lobster
-  - GitHub: [@vignesh07](https://github.com/vignesh07) · X: [@\_vgnsh](https://x.com/_vgnsh)
-
-- **Jos** - Telegram, API, Nix mode
-  - GitHub: [@joshp123](https://github.com/joshp123) · X: [@jjpcodes](https://x.com/jjpcodes)
-
-- **Christoph Nakazawa** - JS Infra
-  - GitHub: [@cpojer](https://github.com/cpojer) · X: [@cnakazawa](https://x.com/cnakazawa)
-
-- **Gustavo Madeira Santana** - Multi-agents, CLI, web UI
-  - GitHub: [@gumadeiras](https://github.com/gumadeiras) · X: [@gumadeiras](https://x.com/gumadeiras)
-
-- **Maximilian Nussbaumer** - DevOps, CI, Code Sanity
-  - GitHub: [@quotentiroler](https://github.com/quotentiroler) · X: [@quotentiroler](https://x.com/quotentiroler)
+- **Dewx Team** - Core maintainers
 
 ## How to Contribute
 
@@ -60,7 +41,7 @@ The root `tsconfig.json` is configured for legacy decorators (`experimentalDecor
 with `useDefineForClassFields: false`. Avoid flipping these unless you are also updating the UI
 build tooling to support standard decorators.
 
-## AI/Vibe-Coded PRs Welcome! 🤖
+## AI/Vibe-Coded PRs Welcome!
 
 Built with Codex, Claude, or other AI tools? **Awesome - just mark it!**
 
@@ -73,13 +54,12 @@ Please include in your PR:
 
 AI PRs are first-class citizens here. We just want transparency so reviewers know what to look for.
 
-## Current Focus & Roadmap 🗺
+## Current Focus & Roadmap
 
 We are currently prioritizing:
 
 - **Stability**: Fixing edge cases in channel connections (WhatsApp/Telegram).
 - **UX**: Improving the onboarding wizard and error messages.
-- **Skills**: For skill contributions, head to [ClawHub](https://clawhub.ai/) — the community hub for DewBot skills.
 - **Performance**: Optimizing token usage and compaction logic.
 
 Check the [GitHub Issues](https://github.com/dewbot/dewbot/issues) for "good first issue" labels!
@@ -92,8 +72,6 @@ We take security reports seriously. Report vulnerabilities directly to the repos
 - **macOS desktop app** — [dewbot/dewbot](https://github.com/dewbot/dewbot) (apps/macos)
 - **iOS app** — [dewbot/dewbot](https://github.com/dewbot/dewbot) (apps/ios)
 - **Android app** — [dewbot/dewbot](https://github.com/dewbot/dewbot) (apps/android)
-- **ClawHub** — [dewbot/clawhub](https://github.com/dewbot/clawhub)
-- **Trust and threat model** — [dewbot/trust](https://github.com/dewbot/trust)
 
 For issues that don't fit a specific repo, or if you're unsure, email **security@dewbot.ai** and we'll route it.
 

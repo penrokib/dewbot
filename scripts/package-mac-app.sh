@@ -217,12 +217,12 @@ else
 fi
 
 echo "📦 Copying DewBotKit resources"
-OPENCLAWKIT_BUNDLE="$(build_path_for_arch "$PRIMARY_ARCH")/$BUILD_CONFIG/DewBotKit_DewBotKit.bundle"
-if [ -d "$OPENCLAWKIT_BUNDLE" ]; then
+DEWBOTKIT_BUNDLE="$(build_path_for_arch "$PRIMARY_ARCH")/$BUILD_CONFIG/DewBotKit_DewBotKit.bundle"
+if [ -d "$DEWBOTKIT_BUNDLE" ]; then
   rm -rf "$APP_ROOT/Contents/Resources/DewBotKit_DewBotKit.bundle"
-  cp -R "$OPENCLAWKIT_BUNDLE" "$APP_ROOT/Contents/Resources/DewBotKit_DewBotKit.bundle"
+  cp -R "$DEWBOTKIT_BUNDLE" "$APP_ROOT/Contents/Resources/DewBotKit_DewBotKit.bundle"
 else
-  echo "WARN: DewBotKit resource bundle not found at $OPENCLAWKIT_BUNDLE (continuing)" >&2
+  echo "WARN: DewBotKit resource bundle not found at $DEWBOTKIT_BUNDLE (continuing)" >&2
 fi
 
 echo "📦 Copying Textual resources"

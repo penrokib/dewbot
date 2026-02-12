@@ -1,6 +1,6 @@
-name: OpenClaw
+name: DewBot
 options:
-  bundleIdPrefix: ai.openclaw
+  bundleIdPrefix: ai.dewbot
   deploymentTarget:
     iOS: "18.0"
   xcodeVersion: "16.0"
@@ -10,33 +10,33 @@ settings:
     SWIFT_VERSION: "6.0"
 
 packages:
-  OpenClawKit:
-    path: ../shared/OpenClawKit
+  DewBotKit:
+    path: ../shared/DewBotKit
   Swabble:
     path: ../../Swabble
 
 schemes:
-  OpenClaw:
+  DewBot:
     shared: true
     build:
       targets:
-        OpenClaw: all
+        DewBot: all
     test:
       targets:
-        - OpenClawTests
+        - DewBotTests
 
 targets:
-  OpenClaw:
+  DewBot:
     type: application
     platform: iOS
     sources:
       - path: Sources
     dependencies:
-      - package: OpenClawKit
-      - package: OpenClawKit
-        product: OpenClawChatUI
-      - package: OpenClawKit
-        product: OpenClawProtocol
+      - package: DewBotKit
+      - package: DewBotKit
+        product: DewBotChatUI
+      - package: DewBotKit
+        product: DewBotProtocol
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
@@ -71,15 +71,15 @@ targets:
         CODE_SIGN_IDENTITY: "Apple Development"
         CODE_SIGN_STYLE: Manual
         DEVELOPMENT_TEAM: Y5PE65HELJ
-        PRODUCT_BUNDLE_IDENTIFIER: ai.openclaw.ios
-        PROVISIONING_PROFILE_SPECIFIER: "ai.openclaw.ios Development"
+        PRODUCT_BUNDLE_IDENTIFIER: ai.dewbot.ios
+        PROVISIONING_PROFILE_SPECIFIER: "ai.dewbot.ios Development"
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
         ENABLE_APPINTENTS_METADATA: NO
     info:
       path: Sources/Info.plist
       properties:
-        CFBundleDisplayName: OpenClaw
+        CFBundleDisplayName: DewBot
         CFBundleIconName: AppIcon
         CFBundleShortVersionString: "2026.2.10"
         CFBundleVersion: "20260202"
@@ -88,16 +88,16 @@ targets:
           UIApplicationSupportsMultipleScenes: false
         UIBackgroundModes:
           - audio
-        NSLocalNetworkUsageDescription: OpenClaw discovers and connects to your OpenClaw gateway on the local network.
+        NSLocalNetworkUsageDescription: DewBot discovers and connects to your DewBot gateway on the local network.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoadsInWebContent: true
         NSBonjourServices:
-          - _openclaw-gw._tcp
-        NSCameraUsageDescription: OpenClaw can capture photos or short video clips when requested via the gateway.
-        NSLocationWhenInUseUsageDescription: OpenClaw uses your location when you allow location sharing.
-        NSLocationAlwaysAndWhenInUseUsageDescription: OpenClaw can share your location in the background when you enable Always.
-        NSMicrophoneUsageDescription: OpenClaw needs microphone access for voice wake.
-        NSSpeechRecognitionUsageDescription: OpenClaw uses on-device speech recognition for voice wake.
+          - _dewbot-gw._tcp
+        NSCameraUsageDescription: DewBot can capture photos or short video clips when requested via the gateway.
+        NSLocationWhenInUseUsageDescription: DewBot uses your location when you allow location sharing.
+        NSLocationAlwaysAndWhenInUseUsageDescription: DewBot can share your location in the background when you enable Always.
+        NSMicrophoneUsageDescription: DewBot needs microphone access for voice wake.
+        NSSpeechRecognitionUsageDescription: DewBot uses on-device speech recognition for voice wake.
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationPortraitUpsideDown
@@ -109,26 +109,26 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
 
-  OpenClawTests:
+  DewBotTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - path: Tests
     dependencies:
-      - target: OpenClaw
+      - target: DewBot
       - package: Swabble
         product: SwabbleKit
       - sdk: AppIntents.framework
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: ai.openclaw.ios.tests
+        PRODUCT_BUNDLE_IDENTIFIER: ai.dewbot.ios.tests
         SWIFT_VERSION: "6.0"
         SWIFT_STRICT_CONCURRENCY: complete
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/OpenClaw.app/OpenClaw"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/DewBot.app/DewBot"
         BUNDLE_LOADER: "$(TEST_HOST)"
     info:
       path: Tests/Info.plist
       properties:
-        CFBundleDisplayName: OpenClawTests
+        CFBundleDisplayName: DewBotTests
         CFBundleShortVersionString: "2026.2.10"
         CFBundleVersion: "20260202"

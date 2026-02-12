@@ -2,7 +2,7 @@
  * JWT Authentication Middleware for DewBot Multi-Tenant Gateway
  *
  * Validates Dewx JWT tokens and extracts org/user context.
- * Replaces OpenClaw's static token auth with Dewx JWT validation.
+ * Replaces static token auth with Dewx JWT validation.
  */
 
 import { createHmac } from "node:crypto";

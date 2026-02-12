@@ -64,6 +64,17 @@ export const sessionsHandlers: GatewayRequestHandlers = {
       store,
       opts: p,
     });
+
+    // If client has org context, filter sessions to only show org-scoped ones
+    const orgId = (p as Record<string, unknown>)._orgId;
+    if (typeof orgId === "string" && orgId) {
+      const orgPrefix = `org-${orgId}-`;
+      result.sessions = result.sessions.filter(
+        (entry) => entry.key?.startsWith(orgPrefix) || entry.sessionId?.startsWith(orgPrefix),
+      );
+      result.count = result.sessions.length;
+    }
+
     respond(true, result, undefined);
   },
   "sessions.preview": ({ params, respond }) => {

@@ -7,21 +7,12 @@ title: "Credits"
 
 ## The name
 
-DewBot = CLAW + TARDIS, because every space lobster needs a time and space machine.
+DewBot — your AI-powered messaging gateway, by Dewx.
 
 ## Credits
 
-- **Peter Steinberger** ([@steipete](https://x.com/steipete)) - Creator, lobster whisperer
-- **Mario Zechner** ([@badlogicc](https://x.com/badlogicgames)) - Pi creator, security pen tester
-- **Clawd** - The space lobster who demanded a better name
-
-## Core contributors
-
-- **Maxim Vovshin** (@Hyaxia, [36747317+Hyaxia@users.noreply.github.com](mailto:36747317+Hyaxia@users.noreply.github.com)) - Blogwatcher skill
-- **Nacho Iacovino** (@nachoiacovino, [nacho.iacovino@gmail.com](mailto:nacho.iacovino@gmail.com)) - Location parsing (Telegram and WhatsApp)
+- **Dewx Team** — Core development and maintenance
 
 ## License
 
-MIT - Free as a lobster in the ocean.
-
-> "We are all just playing with our own prompts." (An AI, probably high on tokens)
+MIT — Based on MIT-licensed software. Copyright (c) 2025 Peter Steinberger.

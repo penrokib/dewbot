@@ -2,7 +2,7 @@
  * Dew AI Client
  *
  * Routes AI requests to Dew AI service (port 4010) instead of
- * OpenClaw's built-in direct LLM calls. This is the bridge between
+ * the built-in direct LLM calls. This is the bridge between
  * DewBot gateway and the Dewx AI brain.
  */
 

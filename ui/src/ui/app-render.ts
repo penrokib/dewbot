@@ -137,7 +137,7 @@ export function renderApp(state: AppViewState) {
               <img src=${basePath ? `${basePath}/favicon.svg` : "/favicon.svg"} alt="DewBot" />
             </div>
             <div class="brand-text">
-              <div class="brand-title">OPENCLAW</div>
+              <div class="brand-title">DEWBOT</div>
               <div class="brand-sub">Gateway Dashboard</div>
             </div>
           </div>

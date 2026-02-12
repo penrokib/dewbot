@@ -1,4 +1,4 @@
-module github.com/openclaw/openclaw/scripts/docs-i18n
+module github.com/dewbot/dewbot/scripts/docs-i18n
 
 go 1.22
 

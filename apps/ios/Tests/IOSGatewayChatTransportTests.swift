@@ -1,6 +1,6 @@
-import OpenClawKit
+import DewBotKit
 import Testing
-@testable import OpenClaw
+@testable import DewBot
 
 @Suite struct IOSGatewayChatTransportTests {
     @Test func requestsFailFastWhenGatewayNotConnected() async {

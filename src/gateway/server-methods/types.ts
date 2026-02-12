@@ -15,6 +15,9 @@ type SubsystemLogger = ReturnType<typeof createSubsystemLogger>;
 export type GatewayClient = {
   connect: ConnectParams;
   connId?: string;
+  orgId?: string;
+  workspaceId?: string;
+  role?: string;
 };
 
 export type RespondFn = (

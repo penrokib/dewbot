@@ -340,7 +340,17 @@ export const chatHandlers: GatewayRequestHandlers = {
       }>;
       timeoutMs?: number;
       idempotencyKey: string;
+      _orgId?: string;
     };
+
+    // Org-scoped session: prefix sessionKey when _orgId is provided
+    if (p._orgId) {
+      const orgPrefix = `org-${p._orgId}-`;
+      if (!p.sessionKey.startsWith(orgPrefix)) {
+        p.sessionKey = `${orgPrefix}${p.sessionKey}`;
+      }
+    }
+
     const stopCommand = isChatStopCommandText(p.message);
     const normalizedAttachments =
       p.attachments

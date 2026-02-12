@@ -221,7 +221,7 @@ export async function applyAuthChoiceApiProviders(
     }
     if (!hasCredential) {
       await params.prompter.note(
-        "LiteLLM provides a unified API to 100+ LLM providers.\nGet your API key from your LiteLLM proxy or https://litellm.ai\nDefault proxy runs on http://localhost:4000",
+        "LiteLLM provides a unified API to 100+ LLM providers.\nGet your API key from your LiteLLM proxy or https://litellm.ai\nDefault proxy runs on http://localhost:4100",
         "LiteLLM",
       );
       const envKey = resolveEnvApiKey("litellm");

@@ -6,7 +6,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
 </p>
 
-> **Attribution:** DewBot is forked from [OpenClaw](https://github.com/openclaw/openclaw) by Peter Steinberger and the OpenClaw community. Original work Copyright (c) 2025 Peter Steinberger, MIT License.
+> **Attribution:** Based on MIT-licensed software. Copyright (c) 2025 Peter Steinberger.
 
 **DewBot** is a _personal AI assistant_ you run on your own devices.
 It answers you on the channels you already use (WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, Microsoft Teams, WebChat), plus extension channels like BlueBubbles, Matrix, Zalo, and Zalo Personal. It can speak and listen on macOS/iOS/Android, and can render a live Canvas you control. The Gateway is just the control plane — the product is the assistant.

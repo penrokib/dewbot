@@ -10,28 +10,17 @@ import type {
   ChannelPlugin,
   ChannelThreadingAdapter,
 } from "./plugins/types.js";
-import {
-  resolveChannelGroupRequireMention,
-  resolveChannelGroupToolsPolicy,
-} from "../config/group-policy.js";
 import { resolveDiscordAccount } from "../discord/accounts.js";
-import { resolveIMessageAccount } from "../imessage/accounts.js";
 import { requireActivePluginRegistry } from "../plugins/runtime.js";
-import { normalizeAccountId } from "../routing/session-key.js";
-import { resolveSignalAccount } from "../signal/accounts.js";
 import { resolveSlackAccount, resolveSlackReplyToMode } from "../slack/accounts.js";
 import { buildSlackThreadingToolContext } from "../slack/threading-tool-context.js";
 import { resolveTelegramAccount } from "../telegram/accounts.js";
-import { escapeRegExp, normalizeE164 } from "../utils.js";
+import { escapeRegExp } from "../utils.js";
 import { resolveWhatsAppAccount } from "../web/accounts.js";
 import { normalizeWhatsAppTarget } from "../whatsapp/normalize.js";
 import {
   resolveDiscordGroupRequireMention,
   resolveDiscordGroupToolPolicy,
-  resolveGoogleChatGroupRequireMention,
-  resolveGoogleChatGroupToolPolicy,
-  resolveIMessageGroupRequireMention,
-  resolveIMessageGroupToolPolicy,
   resolveSlackGroupRequireMention,
   resolveSlackGroupToolPolicy,
   resolveTelegramGroupRequireMention,
@@ -216,131 +205,6 @@ const DOCKS: Record<ChatChannelId, ChannelDock> = {
       }),
     },
   },
-  irc: {
-    id: "irc",
-    capabilities: {
-      chatTypes: ["direct", "group"],
-      media: true,
-      blockStreaming: true,
-    },
-    outbound: { textChunkLimit: 350 },
-    streaming: {
-      blockStreamingCoalesceDefaults: { minChars: 300, idleMs: 1000 },
-    },
-    config: {
-      resolveAllowFrom: ({ cfg, accountId }) => {
-        const channel = cfg.channels?.irc;
-        const normalized = normalizeAccountId(accountId);
-        const account =
-          channel?.accounts?.[normalized] ??
-          channel?.accounts?.[
-            Object.keys(channel?.accounts ?? {}).find(
-              (key) => key.toLowerCase() === normalized.toLowerCase(),
-            ) ?? ""
-          ];
-        return (account?.allowFrom ?? channel?.allowFrom ?? []).map((entry) => String(entry));
-      },
-      formatAllowFrom: ({ allowFrom }) =>
-        allowFrom
-          .map((entry) => String(entry).trim())
-          .filter(Boolean)
-          .map((entry) =>
-            entry
-              .replace(/^irc:/i, "")
-              .replace(/^user:/i, "")
-              .toLowerCase(),
-          ),
-    },
-    groups: {
-      resolveRequireMention: ({ cfg, accountId, groupId }) => {
-        if (!groupId) {
-          return true;
-        }
-        return resolveChannelGroupRequireMention({
-          cfg,
-          channel: "irc",
-          groupId,
-          accountId,
-          groupIdCaseInsensitive: true,
-        });
-      },
-      resolveToolPolicy: ({ cfg, accountId, groupId, senderId, senderName, senderUsername }) => {
-        if (!groupId) {
-          return undefined;
-        }
-        // IRC supports per-channel tool policies. Prefer the shared resolver so
-        // toolsBySender is honored consistently across surfaces.
-        return resolveChannelGroupToolsPolicy({
-          cfg,
-          channel: "irc",
-          groupId,
-          accountId,
-          groupIdCaseInsensitive: true,
-          senderId,
-          senderName,
-          senderUsername,
-        });
-      },
-    },
-  },
-  googlechat: {
-    id: "googlechat",
-    capabilities: {
-      chatTypes: ["direct", "group", "thread"],
-      reactions: true,
-      media: true,
-      threads: true,
-      blockStreaming: true,
-    },
-    outbound: { textChunkLimit: 4000 },
-    config: {
-      resolveAllowFrom: ({ cfg, accountId }) => {
-        const channel = cfg.channels?.googlechat as
-          | {
-              accounts?: Record<string, { dm?: { allowFrom?: Array<string | number> } }>;
-              dm?: { allowFrom?: Array<string | number> };
-            }
-          | undefined;
-        const normalized = normalizeAccountId(accountId);
-        const account =
-          channel?.accounts?.[normalized] ??
-          channel?.accounts?.[
-            Object.keys(channel?.accounts ?? {}).find(
-              (key) => key.toLowerCase() === normalized.toLowerCase(),
-            ) ?? ""
-          ];
-        return (account?.dm?.allowFrom ?? channel?.dm?.allowFrom ?? []).map((entry) =>
-          String(entry),
-        );
-      },
-      formatAllowFrom: ({ allowFrom }) =>
-        allowFrom
-          .map((entry) => String(entry).trim())
-          .filter(Boolean)
-          .map((entry) =>
-            entry
-              .replace(/^(googlechat|google-chat|gchat):/i, "")
-              .replace(/^user:/i, "")
-              .replace(/^users\//i, "")
-              .toLowerCase(),
-          ),
-    },
-    groups: {
-      resolveRequireMention: resolveGoogleChatGroupRequireMention,
-      resolveToolPolicy: resolveGoogleChatGroupToolPolicy,
-    },
-    threading: {
-      resolveReplyToMode: ({ cfg }) => cfg.channels?.googlechat?.replyToMode ?? "off",
-      buildToolContext: ({ context, hasRepliedRef }) => {
-        const threadId = context.MessageThreadId ?? context.ReplyToId;
-        return {
-          currentChannelId: context.To?.trim() || undefined,
-          currentThreadTs: threadId != null ? String(threadId) : undefined,
-          hasRepliedRef,
-        };
-      },
-    },
-  },
   slack: {
     id: "slack",
     capabilities: {
@@ -371,75 +235,6 @@ const DOCKS: Record<ChatChannelId, ChannelDock> = {
         resolveSlackReplyToMode(resolveSlackAccount({ cfg, accountId }), chatType),
       allowTagsWhenOff: true,
       buildToolContext: (params) => buildSlackThreadingToolContext(params),
-    },
-  },
-  signal: {
-    id: "signal",
-    capabilities: {
-      chatTypes: ["direct", "group"],
-      reactions: true,
-      media: true,
-    },
-    outbound: { textChunkLimit: 4000 },
-    streaming: {
-      blockStreamingCoalesceDefaults: { minChars: 1500, idleMs: 1000 },
-    },
-    config: {
-      resolveAllowFrom: ({ cfg, accountId }) =>
-        (resolveSignalAccount({ cfg, accountId }).config.allowFrom ?? []).map((entry) =>
-          String(entry),
-        ),
-      formatAllowFrom: ({ allowFrom }) =>
-        allowFrom
-          .map((entry) => String(entry).trim())
-          .filter(Boolean)
-          .map((entry) => (entry === "*" ? "*" : normalizeE164(entry.replace(/^signal:/i, ""))))
-          .filter(Boolean),
-    },
-    threading: {
-      buildToolContext: ({ context, hasRepliedRef }) => {
-        const isDirect = context.ChatType?.toLowerCase() === "direct";
-        const channelId =
-          (isDirect ? (context.From ?? context.To) : context.To)?.trim() || undefined;
-        return {
-          currentChannelId: channelId,
-          currentThreadTs: context.ReplyToId,
-          hasRepliedRef,
-        };
-      },
-    },
-  },
-  imessage: {
-    id: "imessage",
-    capabilities: {
-      chatTypes: ["direct", "group"],
-      reactions: true,
-      media: true,
-    },
-    outbound: { textChunkLimit: 4000 },
-    config: {
-      resolveAllowFrom: ({ cfg, accountId }) =>
-        (resolveIMessageAccount({ cfg, accountId }).config.allowFrom ?? []).map((entry) =>
-          String(entry),
-        ),
-      formatAllowFrom: ({ allowFrom }) =>
-        allowFrom.map((entry) => String(entry).trim()).filter(Boolean),
-    },
-    groups: {
-      resolveRequireMention: resolveIMessageGroupRequireMention,
-      resolveToolPolicy: resolveIMessageGroupToolPolicy,
-    },
-    threading: {
-      buildToolContext: ({ context, hasRepliedRef }) => {
-        const isDirect = context.ChatType?.toLowerCase() === "direct";
-        const channelId =
-          (isDirect ? (context.From ?? context.To) : context.To)?.trim() || undefined;
-        return {
-          currentChannelId: channelId,
-          currentThreadTs: context.ReplyToId,
-          hasRepliedRef,
-        };
-      },
     },
   },
 };

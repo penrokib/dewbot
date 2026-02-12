@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import DewBotKit
 
 @MainActor
 final class GatewayHealthMonitor {
