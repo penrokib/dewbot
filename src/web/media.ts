@@ -32,11 +32,7 @@ type WebMediaOptions = {
 
 function getDefaultLocalRoots(): string[] {
   const home = os.homedir();
-  return [
-    os.tmpdir(),
-    path.join(home, ".openclaw", "media"),
-    path.join(home, ".openclaw", "agents"),
-  ];
+  return [os.tmpdir(), path.join(home, ".dewbot", "media"), path.join(home, ".dewbot", "agents")];
 }
 
 async function assertLocalMediaAllowed(

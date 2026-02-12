@@ -94,10 +94,10 @@ const spawnGatewayInstance = async (name: string): Promise<GatewayInstance> => {
   const port = await getFreePort();
   const hookToken = `token-${name}-${randomUUID()}`;
   const gatewayToken = `gateway-${name}-${randomUUID()}`;
-  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `openclaw-e2e-${name}-`));
-  const configDir = path.join(homeDir, ".openclaw");
+  const homeDir = await fs.mkdtemp(path.join(os.tmpdir(), `dewbot-e2e-${name}-`));
+  const configDir = path.join(homeDir, ".dewbot");
   await fs.mkdir(configDir, { recursive: true });
-  const configPath = path.join(configDir, "openclaw.json");
+  const configPath = path.join(configDir, "dewbot.json");
   const stateDir = path.join(configDir, "state");
   const config = {
     gateway: { port, auth: { mode: "token", token: gatewayToken } },
@@ -126,13 +126,13 @@ const spawnGatewayInstance = async (name: string): Promise<GatewayInstance> => {
         env: {
           ...process.env,
           HOME: homeDir,
-          OPENCLAW_CONFIG_PATH: configPath,
-          OPENCLAW_STATE_DIR: stateDir,
-          OPENCLAW_GATEWAY_TOKEN: "",
-          OPENCLAW_GATEWAY_PASSWORD: "",
-          OPENCLAW_SKIP_CHANNELS: "1",
-          OPENCLAW_SKIP_BROWSER_CONTROL_SERVER: "1",
-          OPENCLAW_SKIP_CANVAS_HOST: "1",
+          DEWBOT_CONFIG_PATH: configPath,
+          DEWBOT_STATE_DIR: stateDir,
+          DEWBOT_GATEWAY_TOKEN: "",
+          DEWBOT_GATEWAY_PASSWORD: "",
+          DEWBOT_SKIP_CHANNELS: "1",
+          DEWBOT_SKIP_BROWSER_CONTROL_SERVER: "1",
+          DEWBOT_SKIP_CANVAS_HOST: "1",
         },
         stdio: ["ignore", "pipe", "pipe"],
       },
@@ -343,8 +343,8 @@ const waitForNodeStatus = async (inst: GatewayInstance, nodeId: string, timeoutM
     const list = (await runCliJson(
       ["nodes", "status", "--json", "--url", `ws://127.0.0.1:${inst.port}`],
       {
-        OPENCLAW_GATEWAY_TOKEN: inst.gatewayToken,
-        OPENCLAW_GATEWAY_PASSWORD: "",
+        DEWBOT_GATEWAY_TOKEN: inst.gatewayToken,
+        DEWBOT_GATEWAY_PASSWORD: "",
       },
     )) as NodeListPayload;
     const match = list.nodes?.find((n) => n.nodeId === nodeId);
@@ -380,14 +380,14 @@ describe("gateway multi-instance e2e", () => {
 
       const [healthA, healthB] = (await Promise.all([
         runCliJson(["health", "--json", "--timeout", "10000"], {
-          OPENCLAW_GATEWAY_PORT: String(gwA.port),
-          OPENCLAW_GATEWAY_TOKEN: gwA.gatewayToken,
-          OPENCLAW_GATEWAY_PASSWORD: "",
+          DEWBOT_GATEWAY_PORT: String(gwA.port),
+          DEWBOT_GATEWAY_TOKEN: gwA.gatewayToken,
+          DEWBOT_GATEWAY_PASSWORD: "",
         }),
         runCliJson(["health", "--json", "--timeout", "10000"], {
-          OPENCLAW_GATEWAY_PORT: String(gwB.port),
-          OPENCLAW_GATEWAY_TOKEN: gwB.gatewayToken,
-          OPENCLAW_GATEWAY_PASSWORD: "",
+          DEWBOT_GATEWAY_PORT: String(gwB.port),
+          DEWBOT_GATEWAY_TOKEN: gwB.gatewayToken,
+          DEWBOT_GATEWAY_PASSWORD: "",
         }),
       ])) as [HealthPayload, HealthPayload];
       expect(healthA.ok).toBe(true);

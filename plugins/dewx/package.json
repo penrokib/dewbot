@@ -1,0 +1,11 @@
+{
+  "name": "@dewx/dewbot-plugin",
+  "version": "1.0.0",
+  "description": "Dewx business tools plugin for DewBot (DewBot fork)",
+  "type": "module",
+  "dewbot": {
+    "extensions": [
+      "index.ts"
+    ]
+  }
+}

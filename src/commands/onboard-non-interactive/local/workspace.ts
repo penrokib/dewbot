@@ -1,10 +1,10 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { DewBotConfig } from "../../../config/config.js";
 import type { OnboardOptions } from "../../onboard-types.js";
 import { resolveUserPath } from "../../../utils.js";
 
 export function resolveNonInteractiveWorkspaceDir(params: {
   opts: OnboardOptions;
-  baseConfig: OpenClawConfig;
+  baseConfig: DewBotConfig;
   defaultWorkspaceDir: string;
 }) {
   const raw = (

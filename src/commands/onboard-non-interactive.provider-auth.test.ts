@@ -32,16 +32,16 @@ type OnboardEnv = {
 function captureEnv(): EnvSnapshot {
   return {
     home: process.env.HOME,
-    stateDir: process.env.OPENCLAW_STATE_DIR,
-    configPath: process.env.OPENCLAW_CONFIG_PATH,
-    skipChannels: process.env.OPENCLAW_SKIP_CHANNELS,
-    skipGmail: process.env.OPENCLAW_SKIP_GMAIL_WATCHER,
-    skipCron: process.env.OPENCLAW_SKIP_CRON,
-    skipCanvas: process.env.OPENCLAW_SKIP_CANVAS_HOST,
-    token: process.env.OPENCLAW_GATEWAY_TOKEN,
-    password: process.env.OPENCLAW_GATEWAY_PASSWORD,
+    stateDir: process.env.DEWBOT_STATE_DIR,
+    configPath: process.env.DEWBOT_CONFIG_PATH,
+    skipChannels: process.env.DEWBOT_SKIP_CHANNELS,
+    skipGmail: process.env.DEWBOT_SKIP_GMAIL_WATCHER,
+    skipCron: process.env.DEWBOT_SKIP_CRON,
+    skipCanvas: process.env.DEWBOT_SKIP_CANVAS_HOST,
+    token: process.env.DEWBOT_GATEWAY_TOKEN,
+    password: process.env.DEWBOT_GATEWAY_PASSWORD,
     customApiKey: process.env.CUSTOM_API_KEY,
-    disableConfigCache: process.env.OPENCLAW_DISABLE_CONFIG_CACHE,
+    disableConfigCache: process.env.DEWBOT_DISABLE_CONFIG_CACHE,
   };
 }
 
@@ -55,16 +55,16 @@ function restoreEnvVar(key: keyof NodeJS.ProcessEnv, value: string | undefined):
 
 function restoreEnv(prev: EnvSnapshot): void {
   restoreEnvVar("HOME", prev.home);
-  restoreEnvVar("OPENCLAW_STATE_DIR", prev.stateDir);
-  restoreEnvVar("OPENCLAW_CONFIG_PATH", prev.configPath);
-  restoreEnvVar("OPENCLAW_SKIP_CHANNELS", prev.skipChannels);
-  restoreEnvVar("OPENCLAW_SKIP_GMAIL_WATCHER", prev.skipGmail);
-  restoreEnvVar("OPENCLAW_SKIP_CRON", prev.skipCron);
-  restoreEnvVar("OPENCLAW_SKIP_CANVAS_HOST", prev.skipCanvas);
-  restoreEnvVar("OPENCLAW_GATEWAY_TOKEN", prev.token);
-  restoreEnvVar("OPENCLAW_GATEWAY_PASSWORD", prev.password);
+  restoreEnvVar("DEWBOT_STATE_DIR", prev.stateDir);
+  restoreEnvVar("DEWBOT_CONFIG_PATH", prev.configPath);
+  restoreEnvVar("DEWBOT_SKIP_CHANNELS", prev.skipChannels);
+  restoreEnvVar("DEWBOT_SKIP_GMAIL_WATCHER", prev.skipGmail);
+  restoreEnvVar("DEWBOT_SKIP_CRON", prev.skipCron);
+  restoreEnvVar("DEWBOT_SKIP_CANVAS_HOST", prev.skipCanvas);
+  restoreEnvVar("DEWBOT_GATEWAY_TOKEN", prev.token);
+  restoreEnvVar("DEWBOT_GATEWAY_PASSWORD", prev.password);
   restoreEnvVar("CUSTOM_API_KEY", prev.customApiKey);
-  restoreEnvVar("OPENCLAW_DISABLE_CONFIG_CACHE", prev.disableConfigCache);
+  restoreEnvVar("DEWBOT_DISABLE_CONFIG_CACHE", prev.disableConfigCache);
 }
 
 async function withOnboardEnv(
@@ -73,20 +73,20 @@ async function withOnboardEnv(
 ): Promise<void> {
   const prev = captureEnv();
 
-  process.env.OPENCLAW_SKIP_CHANNELS = "1";
-  process.env.OPENCLAW_SKIP_GMAIL_WATCHER = "1";
-  process.env.OPENCLAW_SKIP_CRON = "1";
-  process.env.OPENCLAW_SKIP_CANVAS_HOST = "1";
-  process.env.OPENCLAW_DISABLE_CONFIG_CACHE = "1";
-  delete process.env.OPENCLAW_GATEWAY_TOKEN;
-  delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+  process.env.DEWBOT_SKIP_CHANNELS = "1";
+  process.env.DEWBOT_SKIP_GMAIL_WATCHER = "1";
+  process.env.DEWBOT_SKIP_CRON = "1";
+  process.env.DEWBOT_SKIP_CANVAS_HOST = "1";
+  process.env.DEWBOT_DISABLE_CONFIG_CACHE = "1";
+  delete process.env.DEWBOT_GATEWAY_TOKEN;
+  delete process.env.DEWBOT_GATEWAY_PASSWORD;
   delete process.env.CUSTOM_API_KEY;
 
   const tempHome = await fs.mkdtemp(path.join(os.tmpdir(), prefix));
-  const configPath = path.join(tempHome, "openclaw.json");
+  const configPath = path.join(tempHome, "dewbot.json");
   process.env.HOME = tempHome;
-  process.env.OPENCLAW_STATE_DIR = tempHome;
-  process.env.OPENCLAW_CONFIG_PATH = configPath;
+  process.env.DEWBOT_STATE_DIR = tempHome;
+  process.env.DEWBOT_CONFIG_PATH = configPath;
   vi.resetModules();
 
   const runtime: RuntimeMock = {
@@ -140,7 +140,7 @@ async function expectApiKeyProfile(params: {
 
 describe("onboard (non-interactive): provider auth", () => {
   it("stores xAI API key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-xai-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("dewbot-onboard-xai-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -167,7 +167,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores Vercel AI Gateway API key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-ai-gateway-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("dewbot-onboard-ai-gateway-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -200,7 +200,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores token auth profile", async () => {
-    await withOnboardEnv("openclaw-onboard-token-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("dewbot-onboard-token-", async ({ configPath, runtime }) => {
       const token = `sk-ant-oat01-${"a".repeat(80)}`;
 
       await runNonInteractive(
@@ -236,7 +236,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores OpenAI API key and sets OpenAI default model", async () => {
-    await withOnboardEnv("openclaw-onboard-openai-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("dewbot-onboard-openai-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -259,7 +259,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("stores Cloudflare AI Gateway API key and metadata", async () => {
-    await withOnboardEnv("openclaw-onboard-cf-gateway-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("dewbot-onboard-cf-gateway-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -295,7 +295,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("infers Cloudflare auth choice from API key flags", async () => {
-    await withOnboardEnv("openclaw-onboard-cf-gateway-infer-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("dewbot-onboard-cf-gateway-infer-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -330,7 +330,7 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("configures a custom provider from non-interactive flags", async () => {
-    await withOnboardEnv("openclaw-onboard-custom-provider-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("dewbot-onboard-custom-provider-", async ({ configPath, runtime }) => {
       await runNonInteractive(
         {
           nonInteractive: true,
@@ -373,7 +373,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("infers custom provider auth choice from custom flags", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-infer-",
+      "dewbot-onboard-custom-provider-infer-",
       async ({ configPath, runtime }) => {
         await runNonInteractive(
           {
@@ -415,7 +415,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses CUSTOM_API_KEY env fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-env-fallback-",
+      "dewbot-onboard-custom-provider-env-fallback-",
       async ({ configPath, runtime }) => {
         process.env.CUSTOM_API_KEY = "custom-env-key";
 
@@ -453,7 +453,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses matching profile fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-profile-fallback-",
+      "dewbot-onboard-custom-provider-profile-fallback-",
       async ({ configPath, runtime }) => {
         const { upsertAuthProfile } = await import("../agents/auth-profiles.js");
         upsertAuthProfile({
@@ -498,31 +498,28 @@ describe("onboard (non-interactive): provider auth", () => {
   }, 60_000);
 
   it("fails custom provider auth when compatibility is invalid", async () => {
-    await withOnboardEnv(
-      "openclaw-onboard-custom-provider-invalid-compat-",
-      async ({ runtime }) => {
-        await expect(
-          runNonInteractive(
-            {
-              nonInteractive: true,
-              authChoice: "custom-api-key",
-              customBaseUrl: "https://models.custom.local/v1",
-              customModelId: "local-large",
-              customCompatibility: "xmlrpc",
-              skipHealth: true,
-              skipChannels: true,
-              skipSkills: true,
-              json: true,
-            },
-            runtime,
-          ),
-        ).rejects.toThrow('Invalid --custom-compatibility (use "openai" or "anthropic").');
-      },
-    );
+    await withOnboardEnv("dewbot-onboard-custom-provider-invalid-compat-", async ({ runtime }) => {
+      await expect(
+        runNonInteractive(
+          {
+            nonInteractive: true,
+            authChoice: "custom-api-key",
+            customBaseUrl: "https://models.custom.local/v1",
+            customModelId: "local-large",
+            customCompatibility: "xmlrpc",
+            skipHealth: true,
+            skipChannels: true,
+            skipSkills: true,
+            json: true,
+          },
+          runtime,
+        ),
+      ).rejects.toThrow('Invalid --custom-compatibility (use "openai" or "anthropic").');
+    });
   }, 60_000);
 
   it("fails custom provider auth when explicit provider id is invalid", async () => {
-    await withOnboardEnv("openclaw-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
+    await withOnboardEnv("dewbot-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
       await expect(
         runNonInteractive(
           {
@@ -546,7 +543,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("fails inferred custom auth when required flags are incomplete", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-missing-required-",
+      "dewbot-onboard-custom-provider-missing-required-",
       async ({ runtime }) => {
         await expect(
           runNonInteractive(

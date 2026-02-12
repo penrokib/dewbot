@@ -1,16 +1,16 @@
 {
-  "name": "clawdbot",
+  "name": "dewbot",
   "version": "2026.2.10",
-  "description": "Compatibility shim that forwards to openclaw",
+  "description": "Compatibility shim that forwards to dewbot",
   "bin": {
-    "clawdbot": "./bin/clawdbot.js"
+    "dewbot": "./bin/dewbot.js"
   },
   "type": "module",
   "exports": {
     ".": "./index.js",
-    "./cli-entry": "./bin/clawdbot.js"
+    "./cli-entry": "./bin/dewbot.js"
   },
   "dependencies": {
-    "openclaw": "workspace:*"
+    "dewbot": "workspace:*"
   }
 }

@@ -1,0 +1,54 @@
+[Unit]
+Description=DewBot — Autonomous Business Agent for Dewx
+Documentation=https://github.com/penrokib/dewbot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dewbot
+Group=dewbot
+WorkingDirectory=/opt/dewbot
+ExecStart=/usr/bin/node /opt/dewbot/dewbot.mjs daemon
+
+# Restart policy
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+# Environment
+Environment=NODE_ENV=production
+Environment=HOME=/opt/dewbot
+Environment=DEWBOT_HOME=/opt/dewbot/.dewbot
+Environment=DEWBOT_PORT=18789
+EnvironmentFile=-/opt/dewbot/.env
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Security hardening
+ProtectSystem=strict
+ProtectHome=read-only
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+
+# Allow write to workspace and state directories
+ReadWritePaths=/opt/dewbot/.dewbot /opt/dewbot/dist /tmp
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dewbot
+
+[Install]
+WantedBy=multi-user.target
