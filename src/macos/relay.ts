@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import process from "node:process";
 
-declare const __OPENCLAW_VERSION__: string | undefined;
+declare const __DEWBOT_VERSION__: string | undefined;
 
 const BUNDLED_VERSION =
-  (typeof __OPENCLAW_VERSION__ === "string" && __OPENCLAW_VERSION__) ||
-  process.env.OPENCLAW_BUNDLED_VERSION ||
+  (typeof __DEWBOT_VERSION__ === "string" && __DEWBOT_VERSION__) ||
+  process.env.DEWBOT_BUNDLED_VERSION ||
   "0.0.0";
 
 function hasFlag(args: string[], flag: string): boolean {
@@ -49,8 +49,8 @@ async function main() {
   const { loadDotEnv } = await import("../infra/dotenv.js");
   loadDotEnv({ quiet: true });
 
-  const { ensureOpenClawCliOnPath } = await import("../infra/path-env.js");
-  ensureOpenClawCliOnPath();
+  const { ensureDewBotCliOnPath } = await import("../infra/path-env.js");
+  ensureDewBotCliOnPath();
 
   const { enableConsoleCapture } = await import("../logging.js");
   enableConsoleCapture();
@@ -66,7 +66,7 @@ async function main() {
   installUnhandledRejectionHandler();
 
   process.on("uncaughtException", (error) => {
-    console.error("[openclaw] Uncaught exception:", formatUncaughtError(error));
+    console.error("[dewbot] Uncaught exception:", formatUncaughtError(error));
     process.exit(1);
   });
 
@@ -74,9 +74,6 @@ async function main() {
 }
 
 void main().catch((err) => {
-  console.error(
-    "[openclaw] Relay failed:",
-    err instanceof Error ? (err.stack ?? err.message) : err,
-  );
+  console.error("[dewbot] Relay failed:", err instanceof Error ? (err.stack ?? err.message) : err);
   process.exit(1);
 });

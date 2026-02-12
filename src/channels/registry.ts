@@ -4,16 +4,7 @@ import { requireActivePluginRegistry } from "../plugins/runtime.js";
 
 // Channel docking: add new core channels here (order + meta + aliases), then
 // register the plugin in its extension entrypoint and keep protocol IDs in sync.
-export const CHAT_CHANNEL_ORDER = [
-  "telegram",
-  "whatsapp",
-  "discord",
-  "irc",
-  "googlechat",
-  "slack",
-  "signal",
-  "imessage",
-] as const;
+export const CHAT_CHANNEL_ORDER = ["whatsapp", "telegram", "discord", "slack"] as const;
 
 export type ChatChannelId = (typeof CHAT_CHANNEL_ORDER)[number];
 
@@ -23,7 +14,7 @@ export const DEFAULT_CHAT_CHANNEL: ChatChannelId = "whatsapp";
 
 export type ChatChannelMeta = ChannelMeta;
 
-const WEBSITE_URL = "https://openclaw.ai";
+const WEBSITE_URL = "https://dewbot.ai";
 
 const CHAT_CHANNEL_META: Record<ChatChannelId, ChannelMeta> = {
   telegram: {
@@ -59,26 +50,6 @@ const CHAT_CHANNEL_META: Record<ChatChannelId, ChannelMeta> = {
     blurb: "very well supported right now.",
     systemImage: "bubble.left.and.bubble.right",
   },
-  irc: {
-    id: "irc",
-    label: "IRC",
-    selectionLabel: "IRC (Server + Nick)",
-    detailLabel: "IRC",
-    docsPath: "/channels/irc",
-    docsLabel: "irc",
-    blurb: "classic IRC networks with DM/channel routing and pairing controls.",
-    systemImage: "network",
-  },
-  googlechat: {
-    id: "googlechat",
-    label: "Google Chat",
-    selectionLabel: "Google Chat (Chat API)",
-    detailLabel: "Google Chat",
-    docsPath: "/channels/googlechat",
-    docsLabel: "googlechat",
-    blurb: "Google Workspace Chat app with HTTP webhook.",
-    systemImage: "message.badge",
-  },
   slack: {
     id: "slack",
     label: "Slack",
@@ -89,34 +60,9 @@ const CHAT_CHANNEL_META: Record<ChatChannelId, ChannelMeta> = {
     blurb: "supported (Socket Mode).",
     systemImage: "number",
   },
-  signal: {
-    id: "signal",
-    label: "Signal",
-    selectionLabel: "Signal (signal-cli)",
-    detailLabel: "Signal REST",
-    docsPath: "/channels/signal",
-    docsLabel: "signal",
-    blurb: 'signal-cli linked device; more setup (David Reagans: "Hop on Discord.").',
-    systemImage: "antenna.radiowaves.left.and.right",
-  },
-  imessage: {
-    id: "imessage",
-    label: "iMessage",
-    selectionLabel: "iMessage (imsg)",
-    detailLabel: "iMessage",
-    docsPath: "/channels/imessage",
-    docsLabel: "imessage",
-    blurb: "this is still a work in progress.",
-    systemImage: "message.fill",
-  },
 };
 
-export const CHAT_CHANNEL_ALIASES: Record<string, ChatChannelId> = {
-  imsg: "imessage",
-  "internet-relay-chat": "irc",
-  "google-chat": "googlechat",
-  gchat: "googlechat",
-};
+export const CHAT_CHANNEL_ALIASES: Record<string, ChatChannelId> = {};
 
 const normalizeChannelKey = (raw?: string | null): string | undefined => {
   const normalized = raw?.trim().toLowerCase();

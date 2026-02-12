@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `openclaw docs` (search the live docs index)"
+summary: "CLI reference for `dewbot docs` (search the live docs index)"
 read_when:
-  - You want to search the live OpenClaw docs from the terminal
+  - You want to search the live DewBot docs from the terminal
 title: "docs"
 ---
 
-# `openclaw docs`
+# `dewbot docs`
 
 Search the live docs index.
 
 ```bash
-openclaw docs browser extension
-openclaw docs sandbox allowHostControl
+dewbot docs browser extension
+dewbot docs sandbox allowHostControl
 ```

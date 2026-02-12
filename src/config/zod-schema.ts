@@ -92,7 +92,7 @@ const MemorySchema = z
   .strict()
   .optional();
 
-export const OpenClawSchema = z
+export const DewBotSchema = z
   .object({
     meta: z
       .object({

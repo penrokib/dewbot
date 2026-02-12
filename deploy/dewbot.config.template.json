@@ -1,0 +1,35 @@
+{
+  "gateway": {
+    "port": 18789,
+    "bind": "loopback",
+    "auth": {
+      "mode": "jwt"
+    }
+  },
+  "channels": {
+    "whatsapp": { "enabled": true },
+    "telegram": { "enabled": true },
+    "discord": { "enabled": true },
+    "slack": { "enabled": true },
+    "instagram": { "enabled": true, "browser": true },
+    "twitter": { "enabled": true, "browser": true },
+    "messenger": { "enabled": true, "browser": true }
+  },
+  "browser": {
+    "enabled": true,
+    "headless": true,
+    "evaluateEnabled": false
+  },
+  "ai": {
+    "mode": "dewx",
+    "dewxUrl": "http://localhost:4010",
+    "serviceSecret": "${INTERNAL_SERVICE_SECRET}"
+  },
+  "database": {
+    "url": "${DATABASE_URL}"
+  },
+  "logging": {
+    "level": "info",
+    "redactSensitive": true
+  }
+}

@@ -1,16 +1,16 @@
 {
-  "name": "@openclaw/memory-core",
+  "name": "@dewbot/memory-core",
   "version": "2026.2.10",
   "private": true,
-  "description": "OpenClaw core memory search plugin",
+  "description": "DewBot core memory search plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "dewbot": "workspace:*"
   },
   "peerDependencies": {
-    "openclaw": ">=2026.1.26"
+    "dewbot": ">=2026.1.26"
   },
-  "openclaw": {
+  "dewbot": {
     "extensions": [
       "./index.ts"
     ]

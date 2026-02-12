@@ -1,13 +1,13 @@
 {
-  "name": "@openclaw/slack",
+  "name": "@dewbot/slack",
   "version": "2026.2.10",
   "private": true,
-  "description": "OpenClaw Slack channel plugin",
+  "description": "DewBot Slack channel plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "dewbot": "workspace:*"
   },
-  "openclaw": {
+  "dewbot": {
     "extensions": [
       "./index.ts"
     ]

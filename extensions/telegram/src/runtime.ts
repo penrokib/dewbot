@@ -1,4 +1,4 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk";
+import type { PluginRuntime } from "dewbot/plugin-sdk";
 
 let runtime: PluginRuntime | null = null;
 

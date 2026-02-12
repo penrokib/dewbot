@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/discord",
+  "name": "@dewbot/discord",
   "version": "2026.2.10",
-  "description": "OpenClaw Discord channel plugin",
+  "description": "DewBot Discord channel plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "dewbot": "workspace:*"
   },
-  "openclaw": {
+  "dewbot": {
     "extensions": [
       "./index.ts"
     ]

@@ -81,43 +81,43 @@ vi.mock("./progress.js", () => ({
 
 describe("daemon-cli coverage", () => {
   const originalEnv = {
-    OPENCLAW_STATE_DIR: process.env.OPENCLAW_STATE_DIR,
-    OPENCLAW_CONFIG_PATH: process.env.OPENCLAW_CONFIG_PATH,
-    OPENCLAW_GATEWAY_PORT: process.env.OPENCLAW_GATEWAY_PORT,
-    OPENCLAW_PROFILE: process.env.OPENCLAW_PROFILE,
+    DEWBOT_STATE_DIR: process.env.DEWBOT_STATE_DIR,
+    DEWBOT_CONFIG_PATH: process.env.DEWBOT_CONFIG_PATH,
+    DEWBOT_GATEWAY_PORT: process.env.DEWBOT_GATEWAY_PORT,
+    DEWBOT_PROFILE: process.env.DEWBOT_PROFILE,
   };
 
   beforeEach(() => {
-    process.env.OPENCLAW_STATE_DIR = "/tmp/openclaw-cli-state";
-    process.env.OPENCLAW_CONFIG_PATH = "/tmp/openclaw-cli-state/openclaw.json";
-    delete process.env.OPENCLAW_GATEWAY_PORT;
-    delete process.env.OPENCLAW_PROFILE;
+    process.env.DEWBOT_STATE_DIR = "/tmp/dewbot-cli-state";
+    process.env.DEWBOT_CONFIG_PATH = "/tmp/dewbot-cli-state/dewbot.json";
+    delete process.env.DEWBOT_GATEWAY_PORT;
+    delete process.env.DEWBOT_PROFILE;
     serviceReadCommand.mockResolvedValue(null);
   });
 
   afterEach(() => {
-    if (originalEnv.OPENCLAW_STATE_DIR !== undefined) {
-      process.env.OPENCLAW_STATE_DIR = originalEnv.OPENCLAW_STATE_DIR;
+    if (originalEnv.DEWBOT_STATE_DIR !== undefined) {
+      process.env.DEWBOT_STATE_DIR = originalEnv.DEWBOT_STATE_DIR;
     } else {
-      delete process.env.OPENCLAW_STATE_DIR;
+      delete process.env.DEWBOT_STATE_DIR;
     }
 
-    if (originalEnv.OPENCLAW_CONFIG_PATH !== undefined) {
-      process.env.OPENCLAW_CONFIG_PATH = originalEnv.OPENCLAW_CONFIG_PATH;
+    if (originalEnv.DEWBOT_CONFIG_PATH !== undefined) {
+      process.env.DEWBOT_CONFIG_PATH = originalEnv.DEWBOT_CONFIG_PATH;
     } else {
-      delete process.env.OPENCLAW_CONFIG_PATH;
+      delete process.env.DEWBOT_CONFIG_PATH;
     }
 
-    if (originalEnv.OPENCLAW_GATEWAY_PORT !== undefined) {
-      process.env.OPENCLAW_GATEWAY_PORT = originalEnv.OPENCLAW_GATEWAY_PORT;
+    if (originalEnv.DEWBOT_GATEWAY_PORT !== undefined) {
+      process.env.DEWBOT_GATEWAY_PORT = originalEnv.DEWBOT_GATEWAY_PORT;
     } else {
-      delete process.env.OPENCLAW_GATEWAY_PORT;
+      delete process.env.DEWBOT_GATEWAY_PORT;
     }
 
-    if (originalEnv.OPENCLAW_PROFILE !== undefined) {
-      process.env.OPENCLAW_PROFILE = originalEnv.OPENCLAW_PROFILE;
+    if (originalEnv.DEWBOT_PROFILE !== undefined) {
+      process.env.DEWBOT_PROFILE = originalEnv.DEWBOT_PROFILE;
     } else {
-      delete process.env.OPENCLAW_PROFILE;
+      delete process.env.DEWBOT_PROFILE;
     }
   });
 
@@ -148,10 +148,10 @@ describe("daemon-cli coverage", () => {
     serviceReadCommand.mockResolvedValueOnce({
       programArguments: ["/bin/node", "cli", "gateway", "--port", "19001"],
       environment: {
-        OPENCLAW_PROFILE: "dev",
-        OPENCLAW_STATE_DIR: "/tmp/openclaw-daemon-state",
-        OPENCLAW_CONFIG_PATH: "/tmp/openclaw-daemon-state/openclaw.json",
-        OPENCLAW_GATEWAY_PORT: "19001",
+        DEWBOT_PROFILE: "dev",
+        DEWBOT_STATE_DIR: "/tmp/dewbot-daemon-state",
+        DEWBOT_CONFIG_PATH: "/tmp/dewbot-daemon-state/dewbot.json",
+        DEWBOT_GATEWAY_PORT: "19001",
       },
       sourcePath: "/tmp/bot.molt.gateway.plist",
     });
